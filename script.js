@@ -85,7 +85,7 @@ const GameControl = (()=>{
     const gameCheck = ()=>{
         let check = splitArray(GameBoard.getGrid(),3);
         if(horizontalCheck(check) || verticalCheck(check) ||diagonalCheck(check)){
-            return 'win'
+            return true
         }else if(!GameBoard.getGrid().includes(null) ){
             console.log('draw')
         }
@@ -101,37 +101,43 @@ const GameControl = (()=>{
 
 const DisplayController = (()=>{
     const updateGameBoard = (docselect,player)=>{
-     
-        docselect.innerText = player.letter;
-        
+        const gridDiv = document.createElement('div');
+        gridDiv.classList.add('grid-text');
+        gridDiv.innerText = player.letter;
+        docselect.append(gridDiv);
     }
-    
-    const player1 = Player("test",'x');
-    const player2 = Player("test",'o');
+    const createPlayer = (form,sign)=>{
+        return Player(form['player-name'].value,sign);
+    }
 
-    const grid = document.querySelectorAll('.field');
-    
-    grid.forEach(space => {
-        space.addEventListener('click',(e)=>{
+    const startGame = (form1,form2)=>{
+        document.querySelector('.menu-wrapper').setAttribute('style','visibility:hidden;');
+        document.querySelector('.game-wrapper').setAttribute('style','visibility:visible;');
+
+        const player1 = createPlayer(form1,'X');
+        const player2 = createPlayer(form2,'O');
+        const grid = document.querySelectorAll('.field');
+        grid.forEach(space => {
+            space.addEventListener('click',(e)=>{
+                if(e.target.innerText === ""){
+                    if(player1.getTurn() === true){
+                        GameControl.playRound(e.target,player1,e.target.getAttribute('data-space'));
+                        player2.playerTurn();
             
-            if(player1.getTurn() === true){
-                GameControl.playRound(e.target,player1,e.target.getAttribute('data-space'));
-                // updateGameBoard(e.target,player1);
-                player2.playerTurn();
-    
-            }else{
-                GameControl.playRound(e.target,player2,e.target.getAttribute('data-space'));
-                // updateGameBoard(e.target,player2);
-                player1.playerTurn();
-            }
-            
-           
-            
-            // console.log(GameControl.gameCheck());
-           
-            // console.log(player1.turn,player2.turn)
+                    }else{
+                        GameControl.playRound(e.target,player2,e.target.getAttribute('data-space'));
+                        player1.playerTurn();
+                    }
+                }
+                
+            })
         })
-    })
+    } 
+    const gameStart = document.querySelector('.player-submit');
+    const player1Form = document.querySelector('#playerInfo1');
+    const player2Form = document.querySelector('#playerInfo2');
+
+    gameStart.addEventListener('click',()=>startGame(player1Form,player2Form));
     return{
         updateGameBoard
     }
