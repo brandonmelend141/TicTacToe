@@ -5,44 +5,65 @@
 body{
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
-.game-container{
+.game{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid purple;
+    grid-row: 2;
     
-    background-color: white;
-    width: 300px;
-    height: 300px;
+}
+.game-container{   
+    background-color: #B68D40;
+    width: 700px;
+    height: 700px;
     gap: 10px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    /* grid-template-rows: repeat(3,1fr); */
+    grid-template-rows: repeat(3,1fr);
 }
 .game-wrapper{
+    background-color: #FFFDD0;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-rows: fit-content(150px) 3fr;
     position: relative;
     height: 100vh;
-    width: 100vw;
+    /* width: 100vw; */
     padding: 20px;
     visibility: hidden;
 }
-.field{
-    border: solid blue;
-    width: 100px;
+.game-nav-bar{
+    border: solid red;
+    margin: 0;
     height: 100px;
-    border-radius: 10px;
-    background-color: rgb(231, 231, 231);
+    gap: 0;
+    
+}
+.field{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFDD0;
 }
 .grid-text{
-    padding: 20px;
-    text-align: center;
+    border: solid red;
+    height: 3rem;
     font-size: 3rem;
 }
 .menu-wrapper{
     background-color: #FFFDD0;
     height: 100vh;
-    width: 100vw;
+    /* width: 100vw; */
     padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr repeat(2,1fr);
     position: absolute;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .player-card{
@@ -93,10 +114,6 @@ body{
     border-radius: 0 0 15px 0;
 
 }
-.menu-wrapper{
-    display: grid;
-    grid-template-rows: 0.5fr repeat(2,1fr);
-}
 .title{
     grid-row: 1;
     font-size: 5rem;
@@ -112,6 +129,7 @@ body{
 }
 
 .player-submit{
+    grid-row:3 ;
     width: 300px;
     height: 80px;
     border-radius: 10px;
